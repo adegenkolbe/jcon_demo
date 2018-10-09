@@ -2,32 +2,18 @@ package de.jcon.example.jcon_demo.endpoints;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-import org.springframework.boot.actuate.endpoint.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RuntimeEndpoint implements Endpoint<String>{
+@Endpoint(id = "runtime")
+public class RuntimeEndpoint{
     private static LocalDateTime start = LocalDateTime.now();
 
-    @Override
-    public String getId() {
-        return "runtime";
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean isSensitive() {
-        return false;
-    }
-
-    @Override
-    public String invoke() {
+    @ReadOperation
+    public String getAcutalRuntime() {
         return String.format("Server is running for %s seconds",Duration.between(start, LocalDateTime.now()).getSeconds());
     }
 }
