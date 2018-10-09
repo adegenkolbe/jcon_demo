@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
@@ -17,14 +18,15 @@ public class BasicAuthenticationConfigurationAdapter extends WebSecurityConfigur
     @Bean
     public UserDetailsService userDetailsService(){
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("jcon").password("jcon").roles("OWNER").build());
+        final UserDetails user = User.withDefaultPasswordEncoder().username("jcon").password("jcon").roles("OWNER","ACTUATOR").build();
+        manager.createUser(user);
         return manager;
     }
 
     @Override
     public void configure(final HttpSecurity http) throws Exception {
-        super.configure(http);
         http.csrf().disable();
+        super.configure(http);
     }
 
 
