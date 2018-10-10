@@ -15,7 +15,7 @@ import de.jcon.example.jcon_demo.endpoints.RuntimeEndpoint;
 public class NoAuthenticationConfigurationAdapter extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(final WebSecurity web) throws Exception {
-        web.ignoring().requestMatchers(EndpointRequest.to(HealthEndpoint.class, RuntimeEndpoint.class)).anyRequest();
+        web.ignoring().requestMatchers(EndpointRequest.to(HealthEndpoint.class, RuntimeEndpoint.class));
         super.configure(web);
     }
 
